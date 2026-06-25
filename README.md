@@ -1,12 +1,3 @@
-# Desafio Técnico: Dashboard de Atendimentos - Luto Curitiba
-Olá! Agradecemos o seu interesse em fazer parte do nosso time de Tecnologia da Informação. Este desafio foi desenhado para conhecermos melhor suas habilidades técnicas, arquiteturais e de resolução de problemas práticos.
-
-## 1. Sobre a Luto Curitiba
-Somos uma empresa de assistência e planos funerários com 30 anos de atuação no estado do Paraná. Nosso propósito é oferecer suporte completo e empático às famílias na organização de despedidas, cobrindo burocracias, cerimônias, sepultamento e cremação com excelência.
-
-## 2. O Seu Papel na Empresa
-Como Analista Desenvolvedor Pleno, você será responsável por escrever, testar, manter e evoluir nossas aplicações web e mobile. Além disso, atuará diretamente na automação de processos internos, colaborando de perto com stakeholders e contribuindo para a melhoria contínua e inovação dos nossos sistemas.
-
 ## 3. O Escopo do Desafio
 Sua missão é construir um **Dashboard de Velórios**. Esse sistema será utilizado internamente e em painéis para disponibilizar, em uma **única tela**, o acompanhamento em tempo real de todos os velórios que estão atualmente **em andamento** no **Memorial Luto Curitiba**.
 
@@ -70,23 +61,3 @@ Você deverá realizar a publicação utilizando plataformas com camadas gratuit
 ```
 
 5. O container do banco de dados executará automaticamente o script contido na pasta `database/init.sql` na primeira inicialização, criando as tabelas relacionais e inserindo dados de mockup para seus testes locais.
-
----
-
-## 6. O Que Será Avaliado?
-* **Modelagem e Consultas Relacionais:** Sua capacidade de realizar JOINs eficientes entre as tabelas `pessoas`, `registros_obitos` e `velorios` para consolidar as informações.
-* **Padrões de Projeto e Arquitetura:** Organização do código, separação de responsabilidades (Clean Code) e segurança na comunicação entre as camadas.
-* **Resolução de Problemas:** Funcionamento correto do filtro por Registro de Óbito e a geração limpa do PDF.
-* **Sucesso no Deploy:** Persistência e disponibilidade da aplicação nos links públicos fornecidos.
-
----
-
-## 7. Instruções de Entrega
-Ao finalizar o desafio, você deve:
-1. Garantir que todo o código atualizado esteja com push feito no seu repositório do GitHub (seu Fork).
-2. **Atualizar o topo deste arquivo README.md** incluindo claramente os seus links de produção:
-   * **URL do Frontend no ar:** [Substitua por seu link da Vercel ou Netlify]
-   * **URL da API Backend:** [Substitua por seu link do Render ou Railway]
-3. Enviar o link do seu repositório para o responsável pelo seu processo seletivo na Luto Curitiba.
-
-Desejamos muito sucesso no seu teste. Estamos ansiosos para ver sua solução!

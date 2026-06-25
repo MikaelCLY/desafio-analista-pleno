@@ -22,6 +22,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://admin:adminpassword@db:5432/luto_curitiba
+      CORS_ORIGIN: http://localhost:5173
+      TZ: America/Sao_Paulo
     volumes:
       - ./backend:/app
       - /app/node_modules
