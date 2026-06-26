@@ -12,4 +12,9 @@ export default defineConfig({
       '/api': 'http://backend:3000',
     },
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.js',
+  },
 })
