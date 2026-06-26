@@ -1,44 +1,138 @@
 const PDFDocument = require('pdfkit')
+const path = require('path')
+const { BRAND } = require('../config/brand')
+const { createAssetResolver } = require('../utils/assetResolver')
+const { formatDateTime, formatGeneratedAt } = require('../utils/dateFormatter')
 
-const fmt = (ts) =>
-  new Intl.DateTimeFormat('pt-BR', {
-    timeZone: 'America/Sao_Paulo',
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(new Date(ts))
+const LOGO_PATH = path.resolve(__dirname, '../assets/luto-mark.png')
 
-function gerarBanner(res, a) {
-  const doc = new PDFDocument({ size: 'A4', margin: 60 })
+function drawHeader(doc, assetResolver) {
+  const { width } = doc.page
+  const headerHeight = 96
 
-  res.setHeader('Content-Type', 'application/pdf')
-  res.setHeader(
-    'Content-Disposition',
-    `attachment; filename="banner-${a.numero_registro}.pdf"`
-  )
+  doc.save()
+  doc.rect(0, 0, width, headerHeight).fill(BRAND.paper)
+  doc.rect(0, headerHeight - 2, width, 2).fill(BRAND.divider)
+  doc.rect(0, 0, 12, headerHeight).fill(BRAND.primaryLight)
 
-  doc.pipe(res)
+  if (assetResolver.exists(LOGO_PATH)) {
+    doc.image(LOGO_PATH, 58, 26, { fit: [42, 42] })
+  }
 
   doc
-    .fontSize(28)
+    .fillColor(BRAND.primaryLight)
     .font('Helvetica-Bold')
-    .text(a.nome_completo, { align: 'center' })
+    .fontSize(8)
+    .text(BRAND.eyebrow.toUpperCase(), 118, 27, { characterSpacing: 1.6 })
 
-  doc.moveDown(2)
+  doc
+    .fillColor(BRAND.text)
+    .font('Helvetica-Bold')
+    .fontSize(22)
+    .text(BRAND.name, 118, 41)
 
-  doc.fontSize(14).font('Helvetica')
+  doc
+    .fillColor(BRAND.textSecondary)
+    .font('Helvetica')
+    .fontSize(9)
 
-  doc.text(`Velório: ${fmt(a.inicio_velorio)}`)
-  doc.moveDown(0.5)
-  doc.text(`Sepultamento: ${fmt(a.inicio_sepultamento)}`)
-  doc.moveDown(0.5)
-  doc.text(`Local do sepultamento: ${a.local_sepultamento}`)
-  doc.moveDown(0.5)
-  doc.text(`Funerária: ${a.funeraria}`)
-
-  doc.end()
+  doc.restore()
 }
 
-module.exports = gerarBanner
+function drawFooter(doc, generatedAt) {
+  const { width, height } = doc.page
+  const footerY = height - 62
+
+  doc.save()
+  doc.rect(0, footerY - 10, width, 1).fill(BRAND.divider)
+  doc
+    .fillColor(BRAND.textSecondary)
+    .font('Helvetica')
+    .fontSize(9)
+    .text(`Gerado em ${generatedAt}`, 60, footerY, {
+      width: width - 120,
+      align: 'center',
+    })
+
+  doc
+    .fillColor(BRAND.primaryDark)
+    .font('Helvetica-Bold')
+    .fontSize(8)
+    .text(BRAND.name, 60, footerY + 16, {
+      width: width - 120,
+      align: 'center',
+    })
+  doc.restore()
+}
+
+function drawInfoRow(doc, label, value, y) {
+  doc
+    .fillColor(BRAND.textSecondary)
+    .font('Helvetica-Bold')
+    .fontSize(10)
+    .text(label.toUpperCase(), 88, y, { characterSpacing: 0.4 })
+
+  doc
+    .fillColor(BRAND.text)
+    .font('Helvetica')
+    .fontSize(15)
+    .text(value, 88, y + 17, { width: 420 })
+}
+
+function createBannerService({
+  assetResolver = createAssetResolver(),
+  createDocument = () => new PDFDocument({ size: 'A4', margin: 0 }),
+  dateFormatter = formatDateTime,
+  generatedAtFormatter = formatGeneratedAt,
+} = {}) {
+  return {
+    gerar(velorio) {
+      const doc = createDocument()
+      const generatedAt = generatedAtFormatter()
+
+      drawHeader(doc, assetResolver)
+
+      doc.rect(0, 96, doc.page.width, doc.page.height - 158).fill(BRAND.background)
+
+      doc.save()
+      doc
+        .roundedRect(60, 134, doc.page.width - 120, 500, 8)
+        .lineWidth(1)
+        .fillAndStroke(BRAND.paper, BRAND.divider)
+      doc.restore()
+
+      doc
+        .fillColor(BRAND.primaryDark)
+        .font('Helvetica-Bold')
+        .fontSize(12)
+        .text('Falecido(a)', 88, 166, { characterSpacing: 0.5 })
+
+      doc
+        .fillColor(BRAND.text)
+        .fontSize(28)
+        .text(velorio.nome_completo, 88, 188, {
+          width: 420,
+          align: 'left',
+        })
+
+      doc
+        .moveTo(88, 258)
+        .lineTo(doc.page.width - 88, 258)
+        .strokeColor(BRAND.divider)
+        .lineWidth(1)
+        .stroke()
+
+      drawInfoRow(doc, 'Início do velório', dateFormatter(velorio.inicio_velorio), 290)
+      drawInfoRow(doc, 'Início do sepultamento', dateFormatter(velorio.inicio_sepultamento), 356)
+      drawInfoRow(doc, 'Local do sepultamento', velorio.local_sepultamento, 422)
+      drawInfoRow(doc, 'Funerária responsável', velorio.funeraria, 488)
+
+      drawFooter(doc, generatedAt)
+
+      return doc
+    },
+  }
+}
+
+module.exports = createBannerService()
+module.exports.createBannerService = createBannerService

@@ -9,7 +9,19 @@ build/
 
 # Variáveis de ambiente
 .env
-.env.local
+.env.*
+!.env.example
+
+# Especificações internas
+specs/
+
+# Ferramentas locais/assistentes
+.agents/
+.codex/
+.claude/
+agents/
+codex/
+claude/
 
 # Arquivos do SO
 .DS_Store
