@@ -20,13 +20,12 @@ JOIN pessoas p ON p.id = r.pessoa_id`
 
 function createVeloriosRepository(db) {
   return {
-    async findByLocalAndStatus(localVelorio, status) {
+    async findByLocal(localVelorio) {
       const { rows } = await db.query(`
         SELECT ${SELECT_FIELDS}
         WHERE v.local_velorio = $1
-          AND ${STATUS_SQL} = $2
         ORDER BY v.inicio_velorio
-      `, [localVelorio, status])
+      `, [localVelorio])
 
       return rows
     },

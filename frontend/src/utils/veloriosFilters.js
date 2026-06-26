@@ -6,7 +6,7 @@ export const FILTROS_VAZIOS = {
   inicio_ate: '',
 }
 
-export const STATUS_INICIAIS = ['em_andamento', 'nao_iniciado']
+export const STATUS_INICIAIS = ['em_andamento', 'nao_iniciado', 'concluido']
 
 const CAMPOS_OPCOES = ['funeraria', 'sala_velorio', 'local_sepultamento']
 

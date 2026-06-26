@@ -1,14 +1,14 @@
 const { toVelorioDto, toVeloriosDto } = require('../dto/velorioDto')
 const { AppError } = require('../errors/AppError')
-const { ACTIVE_STATUS, MEMORIAL_LOCAL } = require('../config/velorios')
+const { MEMORIAL_LOCAL } = require('../config/velorios')
 
 function createVeloriosService(
   veloriosRepository,
-  { activeStatus = ACTIVE_STATUS, memorialLocal = MEMORIAL_LOCAL } = {}
+  { memorialLocal = MEMORIAL_LOCAL } = {}
 ) {
   return {
     async listarTodos() {
-      const velorios = await veloriosRepository.findByLocalAndStatus(memorialLocal, activeStatus)
+      const velorios = await veloriosRepository.findByLocal(memorialLocal)
       return toVeloriosDto(velorios)
     },
 
