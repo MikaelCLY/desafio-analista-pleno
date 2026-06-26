@@ -1,6 +1,54 @@
-* **URL do Frontend no ar:** [https://luto-curitiba.vercel.app](url)
-* **URL da API Backend:** [https://desafio-analista-pleno-u57j.onrender.com](url)
+* **URL do Frontend no ar:** [https://luto-curitiba.vercel.app](https://luto-curitiba.vercel.app)
+* **URL da API Backend:** [https://desafio-analista-pleno-u57j.onrender.com](https://desafio-analista-pleno-u57j.onrender.com)
 ---
+
+## Como rodar localmente
+
+### Pré-requisitos
+- [Docker](https://docs.docker.com/get-docker/) e Docker Compose
+
+### Subindo o ambiente
+Na raiz do projeto:
+
+```bash
+docker compose up -d
+```
+
+Isso orquestra três serviços (banco, API e frontend). Na primeira inicialização, o container do banco executa automaticamente o `database/init.sql`, criando as tabelas e populando os dados de mockup.
+
+| Serviço  | URL local                 | Porta |
+|----------|---------------------------|-------|
+| Frontend | http://localhost:5173     | 5173  |
+| API      | http://localhost:3000     | 3000  |
+| Postgres | localhost:5432            | 5432  |
+
+Para acompanhar os logs ou derrubar o ambiente:
+
+```bash
+docker compose logs -f      # logs de todos os serviços
+docker compose down         # para os containers (use -v para limpar o volume do banco)
+```
+
+### Variáveis de ambiente
+Os defaults usados no Compose já permitem rodar tudo sem configuração adicional:
+
+| Variável        | Onde         | Default                                                      |
+|-----------------|--------------|-------------------------------------------------------------|
+| `DATABASE_URL`  | backend      | `postgres://admin:adminpassword@db:5432/luto_curitiba`      |
+| `CORS_ORIGIN`   | backend      | `http://localhost:5173`                                     |
+| `VITE_API_URL`  | frontend     | `http://localhost:3000/api`                                 |
+
+### Testes
+```bash
+# Backend (node --test)
+cd backend && npm install && npm test
+
+# Frontend (Vitest)
+cd frontend && npm install && npm test
+```
+
+---
+
 # Desafio Técnico: Dashboard de Atendimentos - Luto Curitiba
 Olá! Agradecemos o seu interesse em fazer parte do nosso time de Tecnologia da Informação. Este desafio foi desenhado para conhecermos melhor suas habilidades técnicas, arquiteturais e de resolução de problemas práticos.
 
