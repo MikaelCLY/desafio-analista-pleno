@@ -1,4 +1,4 @@
-* **URL do Frontend no ar:** [https://vercel.com/mikaellibertinodev-8195s-projects](url)
+* **URL do Frontend no ar:** [https://luto-curitiba.vercel.app/](url)
 * **URL da API Backend:** [https://desafio-analista-pleno-u57j.onrender.com/](url)
 ---
 # Desafio Técnico: Dashboard de Atendimentos - Luto Curitiba
