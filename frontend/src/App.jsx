@@ -2,12 +2,11 @@ import { useState, useCallback } from 'react'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
 import Alert from '@mui/material/Alert'
 import { useVelorios } from './hooks/useVelorios'
 import { SearchBar } from './components/SearchBar'
-import { VelorioCard } from './components/VelorioCard'
+import { VelorioTable } from './components/VelorioTable'
 import { EmptyState } from './components/EmptyState'
 
 export default function App() {
@@ -53,13 +52,7 @@ export default function App() {
         ) : filtrados.length === 0 ? (
           <EmptyState searching={!!termo} />
         ) : (
-          <Grid container spacing={3}>
-            {filtrados.map((v) => (
-              <Grid key={v.id} size={{ xs: 12, sm: 6, lg: 4 }}>
-                <VelorioCard velorio={v} />
-              </Grid>
-            ))}
-          </Grid>
+          <VelorioTable velorios={filtrados} />
         )}
       </Container>
     </Box>
