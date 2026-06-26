@@ -1,12 +1,16 @@
-const db = require('./db')
-const bannerService = require('./services/banner')
+const { createPool, createDb } = require('./db')
 const { createApp } = require('./app')
 const { createVeloriosRepository } = require('./repositories/veloriosRepository')
 const { createVeloriosService } = require('./services/veloriosService')
 const { createVeloriosController } = require('./controllers/veloriosController')
+const { createBannerService } = require('./services/banner')
+
+const pool = createPool()
+const db = createDb(pool)
 
 const veloriosRepository = createVeloriosRepository(db)
 const veloriosService = createVeloriosService(veloriosRepository)
+const bannerService = createBannerService()
 const veloriosController = createVeloriosController({
   veloriosService,
   bannerService,
