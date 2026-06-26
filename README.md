@@ -1,3 +1,6 @@
+* **URL do Frontend no ar:** [https://vercel.com/mikaellibertinodev-8195s-projects](url)
+* **URL da API Backend:** [https://desafio-analista-pleno-u57j.onrender.com/](url)
+---
 # Desafio Técnico: Dashboard de Atendimentos - Luto Curitiba
 Olá! Agradecemos o seu interesse em fazer parte do nosso time de Tecnologia da Informação. Este desafio foi desenhado para conhecermos melhor suas habilidades técnicas, arquiteturais e de resolução de problemas práticos.
 
