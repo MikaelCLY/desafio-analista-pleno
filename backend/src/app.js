@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { createVeloriosRouter } = require('./routes/velorios')
+const { errorHandler } = require('./middlewares/errorHandler')
 
 function createApp({ veloriosController }) {
   const app = express()
@@ -9,6 +10,8 @@ function createApp({ veloriosController }) {
   app.use(express.json())
 
   app.use('/api/velorios', createVeloriosRouter(veloriosController))
+
+  app.use(errorHandler)
 
   return app
 }
