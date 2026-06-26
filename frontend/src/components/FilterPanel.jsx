@@ -49,6 +49,7 @@ export function FilterPanel({ aberto, opcoes, filtros, onChange, onLimpar, range
             InputLabelProps={{ shrink: true }}
             value={filtros.inicio_de}
             error={rangeInvalido}
+            helperText=" "
             onChange={(e) => onChange('inicio_de', e.target.value)}
           />
           <TextField
